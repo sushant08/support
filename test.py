@@ -5,10 +5,9 @@ log_groups = logs.describe_log_groups()
 
 for log_group in log_groups['logGroups']:
     log_group_name = log_group['logGroupName']
-    codebuild = (x for x in log_group_name if 'lambda' in x)
-            response = logs.put_retention_policy(
-                logGroupName=codebuild,
-                retentionInDays=7
-                )
-
-
+    if "lambda" in log_group_name:
+        print("log group name:", log_group_name)
+        response = logs.put_retention_policy(
+            logGroupName=log_group_name,
+            retentionInDays=30
+        )
